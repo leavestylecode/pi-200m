@@ -36,9 +36,47 @@ If the sequence is found, the script prints the position. If not found, it exits
 - Chunk files: ASCII digits only, no newlines.
 - Manifest fields: `digits`, `chunk_size`, `width`, `index_base`, `fractional_only`.
 
+## Checksums
+Create a checksum list:
+```bash
+python scripts/pi_hash.py --input-dir data/pi_digits
+```
+Verify later:
+```bash
+python scripts/pi_hash.py --input-dir data/pi_digits --verify
+```
+
 ## GitHub Storage
 Only commit scripts, configuration, and documentation. Do not commit generated digit files. The `.gitignore` excludes `data/pi_digits/`.
 If you want to share results, use Git LFS or GitHub Releases for the chunk files.
+
+### Sharing Results (EN)
+Option A: Git LFS
+```bash
+git lfs install
+git lfs track "data/pi_digits/*.txt" "data/pi_digits/manifest.json" "data/pi_digits/checksums.txt"
+git add .gitattributes data/pi_digits/manifest.json data/pi_digits/checksums.txt
+```
+Option B: GitHub Releases
+```bash
+python scripts/pi_hash.py --input-dir data/pi_digits
+tar -czf pi_digits.tar.gz data/pi_digits
+```
+Upload the archive to a GitHub Release and keep scripts in git.
+
+### 结果发布建议 (中文)
+方案 A：Git LFS
+```bash
+git lfs install
+git lfs track "data/pi_digits/*.txt" "data/pi_digits/manifest.json" "data/pi_digits/checksums.txt"
+git add .gitattributes data/pi_digits/manifest.json data/pi_digits/checksums.txt
+```
+方案 B：GitHub Release
+```bash
+python scripts/pi_hash.py --input-dir data/pi_digits
+tar -czf pi_digits.tar.gz data/pi_digits
+```
+把压缩包上传到 Release，脚本仍保留在仓库中。
 
 ## Resource Considerations
 Computing 200M digits is CPU/RAM intensive. This implementation uses Chudnovsky binary splitting and may take hours (or longer) depending on hardware. Adjust `--guard` for safer rounding if needed.

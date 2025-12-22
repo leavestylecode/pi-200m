@@ -5,6 +5,7 @@
   - `pi_compute.py` generates pi digits into chunk files.
   - `pi_search.py` searches for a digit sequence.
   - `pi_utils.py` holds shared helpers.
+  - `pi_hash.py` creates/verifies SHA256 checksums for releases.
 - `data/pi_digits/` is the default output location for computed digits.
 - `README.md` documents usage in English and Chinese.
 
