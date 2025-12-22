@@ -1,10 +1,9 @@
 # pi-200m
 
-## Overview (EN)
-This project computes and stores the first 200,000,000 digits of pi for fast substring search. It includes a generator that writes digits into fixed-size chunks and a search tool that scans those chunks to find the first occurrence of a digit sequence.
+# English
 
-## 使用简介 (中文)
-本项目用于计算并保存圆周率小数点后 2 亿位数字，以便进行快速的“pi search”。提供计算脚本（按固定大小分块保存）和搜索脚本（在分块文件中查找首次出现位置）。
+## Overview
+This project computes and stores the first 200,000,000 digits of pi for fast substring search. It includes a generator that writes digits into fixed-size chunks and a search tool that scans those chunks to find the first occurrence of a digit sequence.
 
 ## Requirements
 - Python 3.10+
@@ -64,6 +63,58 @@ tar -czf pi_digits.tar.gz data/pi_digits
 ```
 Upload the archive to a GitHub Release and keep scripts in git.
 
+## Resource Considerations
+Computing 200M digits is CPU/RAM intensive. This implementation uses Chudnovsky binary splitting and may take hours (or longer) depending on hardware. Adjust `--guard` for safer rounding if needed.
+
+# 中文
+
+## 项目简介
+本项目用于计算并保存圆周率小数点后 2 亿位数字，以便进行快速的“pi search”。提供计算脚本（按固定大小分块保存）和搜索脚本（在分块文件中查找首次出现位置）。
+
+## 环境依赖
+- Python 3.10+
+- `gmpy2`（大整数运算依赖）
+
+安装：
+```bash
+python -m pip install -r requirements.txt
+```
+
+## 计算数字
+生成小数部分并分块保存：
+```bash
+python scripts/pi_compute.py --digits 200000000 --chunk-size 1000000 --output-dir data/pi_digits
+```
+说明：
+- 输出只包含小数部分（不包含 `3.`）。
+- 文件命名为 `pi_digits_<start>_<end>.txt`，位置从 1 开始计数。
+- `data/pi_digits/manifest.json` 记录分块参数。
+
+## 搜索数字
+查找首次出现位置（小数部分，1-based）：
+```bash
+python scripts/pi_search.py 1415926 --input-dir data/pi_digits
+```
+找到后输出位置，未找到返回非 0 退出码。
+
+## 输出格式
+- 分块文件：仅包含数字字符，无换行。
+- 清单字段：`digits`, `chunk_size`, `width`, `index_base`, `fractional_only`。
+
+## 校验
+生成校验清单：
+```bash
+python scripts/pi_hash.py --input-dir data/pi_digits
+```
+验证校验清单：
+```bash
+python scripts/pi_hash.py --input-dir data/pi_digits --verify
+```
+
+## GitHub 存储
+只提交脚本、配置与文档，不提交生成的数据文件。`.gitignore` 已排除 `data/pi_digits/`。
+如需共享结果，建议使用 Git LFS 或 GitHub Release。
+
 ### 结果发布建议 (中文)
 方案 A：Git LFS
 ```bash
@@ -78,5 +129,5 @@ tar -czf pi_digits.tar.gz data/pi_digits
 ```
 把压缩包上传到 Release，脚本仍保留在仓库中。
 
-## Resource Considerations
-Computing 200M digits is CPU/RAM intensive. This implementation uses Chudnovsky binary splitting and may take hours (or longer) depending on hardware. Adjust `--guard` for safer rounding if needed.
+## 资源消耗说明
+计算 2 亿位需要较高 CPU/RAM，运行时间可能很长。必要时可调整 `--guard` 以提高安全的舍入余量。
