@@ -37,7 +37,8 @@ If the sequence is found, the script prints the position. If not found, it exits
 - Manifest fields: `digits`, `chunk_size`, `width`, `index_base`, `fractional_only`.
 
 ## GitHub Storage
-200,000,000 digits are ~200MB. Consider using Git LFS or GitHub Releases for the chunk files, and keep the scripts and manifest in git.
+Only commit scripts, configuration, and documentation. Do not commit generated digit files. The `.gitignore` excludes `data/pi_digits/`.
+If you want to share results, use Git LFS or GitHub Releases for the chunk files.
 
 ## Resource Considerations
 Computing 200M digits is CPU/RAM intensive. This implementation uses Chudnovsky binary splitting and may take hours (or longer) depending on hardware. Adjust `--guard` for safer rounding if needed.
