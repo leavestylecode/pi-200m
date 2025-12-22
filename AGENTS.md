@@ -6,6 +6,7 @@
   - `pi_search.py` searches for a digit sequence.
   - `pi_utils.py` holds shared helpers.
   - `pi_hash.py` creates/verifies SHA256 checksums for releases.
+  - `pi_compare.py` compares external pi digit files with generated chunks.
 - `data/pi_digits/` is the default output location for computed digits.
 - `README.md` documents usage in English and Chinese.
 

@@ -66,6 +66,16 @@ Upload the archive to a GitHub Release and keep scripts in git.
 ## Resource Considerations
 Computing 200M digits is CPU/RAM intensive. This implementation uses Chudnovsky binary splitting and may take hours (or longer) depending on hardware. Adjust `--guard` for safer rounding if needed.
 
+## External Validation
+Compare against a known source (e.g., Eve Andersson's 1,000,000 digits file):
+```bash
+python scripts/pi_compare.py --source data/check/one-million.txt --input-dir data/pi_digits
+```
+Optionally write a normalized digits-only file for future comparisons:
+```bash
+python scripts/pi_compare.py --source data/check/one-million.txt --normalize-output data/check/one-million.digits.txt
+```
+
 # 中文
 
 ## 项目简介
@@ -131,3 +141,13 @@ tar -czf pi_digits.tar.gz data/pi_digits
 
 ## 资源消耗说明
 计算 2 亿位需要较高 CPU/RAM，运行时间可能很长。必要时可调整 `--guard` 以提高安全的舍入余量。
+
+## 外部校验
+使用已知来源进行对比（例如 Eve Andersson 的 100 万位文件）：
+```bash
+python scripts/pi_compare.py --source data/check/one-million.txt --input-dir data/pi_digits
+```
+可选：输出标准化纯数字文件，便于重复比对：
+```bash
+python scripts/pi_compare.py --source data/check/one-million.txt --normalize-output data/check/one-million.digits.txt
+```
