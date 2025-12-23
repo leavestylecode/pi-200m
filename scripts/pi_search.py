@@ -3,7 +3,7 @@ import argparse
 import sys
 from pathlib import Path
 
-from pi_utils import load_manifest, list_chunk_files
+from pi_utils import list_chunk_files_auto
 
 
 def normalize_pattern(raw):
@@ -16,9 +16,9 @@ def normalize_pattern(raw):
 
 
 def search_pattern(output_dir, pattern):
-    manifest = load_manifest(output_dir)
-    width = manifest["width"]
-    files = list_chunk_files(output_dir, width)
+    files = list_chunk_files_auto(output_dir)
+    if not files:
+        raise SystemExit("No pi digit chunks found in input directory")
 
     carry = ""
     processed = 0

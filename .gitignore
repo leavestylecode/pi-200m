@@ -1,4 +1,5 @@
 __pycache__/
 *.pyc
 /data/pi_digits/
+/data/pi_packed/
 .DS_Store

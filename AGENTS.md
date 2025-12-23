@@ -7,6 +7,8 @@
   - `pi_utils.py` holds shared helpers.
   - `pi_hash.py` creates/verifies SHA256 checksums for releases.
   - `pi_compare.py` compares external pi digit files with generated chunks.
+  - `pi_pack.py` packs digits into compact binary form.
+  - `pi_search_packed.py` searches the packed binary digits.
 - `data/pi_digits/` is the default output location for computed digits.
 - `README.md` documents usage in English and Chinese.
 

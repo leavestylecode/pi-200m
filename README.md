@@ -35,6 +35,17 @@ If the sequence is found, the script prints the position. If not found, it exits
 - Chunk files: ASCII digits only, no newlines.
 - Manifest fields: `digits`, `chunk_size`, `width`, `index_base`, `fractional_only`.
 
+## Packed Format (Space Saving)
+Pack digits into a binary file using two digits per byte (00–99), about 50% size reduction:
+```bash
+python scripts/pi_pack.py --input-dir data/pi_digits --output-dir data/pi_packed
+```
+Search the packed output:
+```bash
+python scripts/pi_search_packed.py 1415926 --input-dir data/pi_packed
+```
+On typical desktop hardware, a full scan against 200M digits is usually a few seconds.
+
 ## Checksums
 Create a checksum list:
 ```bash
@@ -110,6 +121,17 @@ python scripts/pi_search.py 1415926 --input-dir data/pi_digits
 ## 输出格式
 - 分块文件：仅包含数字字符，无换行。
 - 清单字段：`digits`, `chunk_size`, `width`, `index_base`, `fractional_only`。
+
+## 二进制压缩格式
+把数字按“每字节两位”打包，体积约减少一半：
+```bash
+python scripts/pi_pack.py --input-dir data/pi_digits --output-dir data/pi_packed
+```
+在打包结果中检索：
+```bash
+python scripts/pi_search_packed.py 1415926 --input-dir data/pi_packed
+```
+在普通桌面机器上，扫描 2 亿位通常只需几秒级。
 
 ## 校验
 生成校验清单：

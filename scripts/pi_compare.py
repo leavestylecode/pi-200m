@@ -2,7 +2,7 @@
 import argparse
 from pathlib import Path
 
-from pi_utils import list_chunk_files, load_manifest
+from pi_utils import list_chunk_files_auto
 
 
 def extract_fractional(text):
@@ -18,9 +18,9 @@ def extract_fractional(text):
 
 
 def load_generated_digits(input_dir):
-    manifest = load_manifest(input_dir)
-    width = manifest["width"]
-    files = list_chunk_files(input_dir, width)
+    files = list_chunk_files_auto(input_dir)
+    if not files:
+        raise SystemExit("No pi digit chunks found in input directory")
 
     for path in files:
         data = path.read_text(encoding="utf-8").strip()

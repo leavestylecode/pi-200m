@@ -3,7 +3,7 @@ import argparse
 import hashlib
 from pathlib import Path
 
-from pi_utils import list_chunk_files, load_manifest
+from pi_utils import list_chunk_files_auto, load_manifest
 
 
 def sha256_file(path):
@@ -15,9 +15,9 @@ def sha256_file(path):
 
 
 def write_checksums(input_dir, output_path):
-    manifest = load_manifest(input_dir)
-    width = manifest["width"]
-    files = list_chunk_files(input_dir, width)
+    files = list_chunk_files_auto(input_dir)
+    if not files:
+        raise SystemExit("No pi digit chunks found in input directory")
 
     lines = []
     manifest_path = Path(input_dir) / "manifest.json"
